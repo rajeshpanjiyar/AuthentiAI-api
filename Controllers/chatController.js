@@ -54,3 +54,27 @@ exports.getAllChats = async (req, res) => {
       return res.status(400).json(error);
     }
   };
+
+exports.deleteAllChats = async(req, res) => {
+    try {
+        const user_id = req.params.user_id;
+        await Chat.deleteMany({user_id: user_id}, (error, values) => {
+            if (error) {
+              throw error;
+            } else {
+              res.send(values);
+            }
+          }).clone().catch(function(err){ console.log(err)});
+    } catch (error) {
+        return res.status(400).json(error);
+    }
+}
+
+// page not found
+exports.pageNotFound = async (req, res) => {
+  try {
+    res.render("404 Request page not found!");
+  } catch (error) {
+    console.log(error);
+  }
+};
